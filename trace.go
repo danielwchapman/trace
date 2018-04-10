@@ -29,12 +29,6 @@ import (
 	"time"
 )
 
-// TODO
-// Rotate log files after size is reached
-// Compression mode
-// Add a go routine for each seperate io.Writer
-// Add easy io.Writer set up
-
 const (
 	// DefaultGroupId is the ID of the default logging group
 	DefaultGroupId = 0
@@ -155,8 +149,8 @@ func logRoutine() {
 // printLog is a helper function for formating a log message
 func printLog(group int, t time.Time, msg string) {
 	strTime := t.UTC().Format("2006-1-2 15:04:05.000000")
-	if group == 0 {
-		fmt.Fprintf(groups[group].output, "%s %s\n", strTime, msg)
+	if group == DefaultGroupId {
+		fmt.Fprintf(groups[DefaultGroupId].output, "%s %s\n", strTime, msg)
 	} else {
 		groupname := groups[group].name
 		fmt.Fprintf(groups[group].output, "%s [%s] %s\n", strTime, groupname, msg)
